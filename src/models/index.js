@@ -9,6 +9,6 @@ const db = {};
 db.mongoose = mongoose;
 db.url = dbConfig.url;
 
-//db.stations = require(./station.model)(mongoose);
+db.zones = require('./zone.model')(mongoose);
 
 module.exports = db;
