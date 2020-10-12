@@ -1,12 +1,13 @@
 const Station = require('../models/station.model');
 const Zone = require('../models/zone.model');
+const Route = require('../models/route.model');
 const zoneController = require('./zone.controller');
 
 const stationController = {};
 
 stationController.createStation = async (req, res) => {
 
-    const {name, address, zone} = req.body;
+    const {name, address, zone, routes } = req.body;
     if (!req.body) {
         res.status(404).send({
             message: 'La información de la estación no debe ser vacia!.'
@@ -26,7 +27,8 @@ stationController.createStation = async (req, res) => {
     const station = new Station({
         name,
         address,
-        zone
+        zone,
+        stations
     });
 
     await station.save(station)
@@ -41,9 +43,27 @@ stationController.createStation = async (req, res) => {
     );
 }
 
+stationController.addRouteToStation = async (req, res) => {
+
+    const id = req.params.id;
+
+    const { route } = req.body;
+
+    await Station.findByIdAndUpdate(id, {
+        $push: {routes: route._id}},
+        {new: true, useFindAndModify: false}
+    ).then((data) => {
+        res.status(200).send(data);
+    }).catch((err) => {
+        res.status(500).send({
+            message: err.message || "Ocurrió un error al agregar la ruta a la estación."
+        })
+    });
+}
+
 stationController.findAllStations = async (req, res) => {
 
-    const name = req.body.name;
+    const name = req.query.name;
 
     var condition = name ? {name: { $regex: new RegExp(name), $option: "i"}}: {};
 
@@ -131,7 +151,7 @@ stationController.deleteAllStations = async (req, res) => {
 
     await Station.deleteMany({})
         .then((data) => {
-            res.send({message: `${data.deletedCount} estaciones eliminadas!.`});
+            res.send({message: `${data.deletedCount} estacion(es) eliminadas!.`});
         }).catch((err) => {
             res.status(500).send({
                 message:

@@ -14,10 +14,12 @@ var stationSchema = new Schema ({
   zone: {
     type: Schema.ObjectId,
     ref: "Zone"
-  }
-},
-{timestamps: true}
-);
+  },
+  routes: [{
+    type: Schema.ObjectId,
+    ref: "Route"
+  }]
+},{timestamps: true});
 
 module.exports = model("Station", stationSchema);
 
