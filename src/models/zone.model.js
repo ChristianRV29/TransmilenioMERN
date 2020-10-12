@@ -1,24 +1,40 @@
-module.exports = mongoose => {
+const { Schema, model} = require('mongoose');
 
-    var schema = mongoose.Schema({
-        name: {
-            type: String,
-            required: true,
-        },
+const zoneSchema = new Schema({
+    name: {
+        type: String,
+        required: true,
     },
-        {timestamps: true}
-    );
+    description: {
+        type: String,
+        required: true,
+    },  
+}, {timestamps: true});
 
-    schema.method("toJSON", function(){
+module.exports = model('Zone', zoneSchema);
 
-        const {__v, _id, _name, ...object} = this.toObject();
 
-        object.id = _id;
+// module.exports = mongoose => {
 
-        return object;
-    });
+//     var schema = mongoose.Schema({
+//         name: {
+//             type: String,
+//             required: true,
+//         },
+//     },
+//         {timestamps: true}
+//     );
 
-    const Zone = mongoose.model("zone", schema);
+//     schema.method("toJSON", function(){
 
-    return Zone;
-};
+//         const {__v, _id, _name, ...object} = this.toObject();
+
+//         object.id = _id;
+
+//         return object;
+//     });
+
+//     const Zone = mongoose.model("zone", schema);
+
+//     return Zone;
+// };

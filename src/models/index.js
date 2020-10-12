@@ -1,14 +1,16 @@
-const dbConfig = require('../config/database/db.config');
-
 const mongoose = require('mongoose');
 
-mongoose.Promise = global.Promise;
+const URI = process.env.MONGODB_URI ? process.env.MONGODB_URI : "mongodb://localhost:27017/transmilenio";
 
-const db = {};
+mongoose.connect(URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+});
 
-db.mongoose = mongoose;
-db.url = dbConfig.url;
+const connection = mongoose.connection; 
 
-db.zones = require('./zone.model')(mongoose);
+connection.once('open',() => {
+   console.log('Base de datos conectada!.'); 
+});
 
-module.exports = db;
+
