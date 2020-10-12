@@ -7,6 +7,7 @@ const {
     updateRoute,
     deleteAllRoutes,
     deleteRoute,
+    addStationToRoute
 } = require('../controllers/route.controller');
 
 router.route('/crearRuta').post(createRoute);
@@ -16,8 +17,6 @@ router.route('/modificarRuta/:id').put(updateRoute);
 router.route('/eliminarRuta/:id').delete(deleteRoute);
 router.route('/eliminarRutas').delete(deleteAllRoutes);
 
-router.route('/mostrarRutas').get((req, res) => {
-    res.send('Estoy mostando las rutas de transmilenio');
-});
+router.route('/agregarEstacionARuta/:id').put(addStationToRoute);
 
 module.exports = router;

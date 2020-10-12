@@ -37,8 +37,8 @@ routerController.addStationToRoute = async (req, res) => {
 
     const { station } = req.body;
 
-    await Station.findByIdAndUpdate(id, {
-        $push: {stations: station._id}},
+    await Route.findByIdAndUpdate(id, {
+        $push: {stations: station}},
         {new: true, useFindAndModify: false}
     ).then((data) => {
         res.status(200).send(data);

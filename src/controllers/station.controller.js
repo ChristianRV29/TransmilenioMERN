@@ -28,7 +28,7 @@ stationController.createStation = async (req, res) => {
         name,
         address,
         zone,
-        stations
+        routes,
     });
 
     await station.save(station)
@@ -50,7 +50,7 @@ stationController.addRouteToStation = async (req, res) => {
     const { route } = req.body;
 
     await Station.findByIdAndUpdate(id, {
-        $push: {routes: route._id}},
+        $push: {routes: route}},
         {new: true, useFindAndModify: false}
     ).then((data) => {
         res.status(200).send(data);
