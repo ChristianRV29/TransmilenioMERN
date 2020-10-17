@@ -2,7 +2,7 @@ var { Schema, model } = require('mongoose');
 
 var Station = model('Station');
 
- var routeSchema = new Schema({
+var routeSchema = new Schema({
     name: {
         type: String,
         required: true,
@@ -11,6 +11,6 @@ var Station = model('Station');
         type: Schema.ObjectId,
         ref: "Station"
     }]
- }, {timestamps: true});
+}, { timestamps: true });
 
- module.exports = model("Route", routeSchema);
+module.exports = model("Route", routeSchema);

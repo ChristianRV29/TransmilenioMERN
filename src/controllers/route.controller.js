@@ -4,9 +4,7 @@ const routerController = {};
 
 routerController.createRoute = async (req, res) => { 
 
-    const {name} = req.body;
-
-    console.log(`Que recibo como name ${name}`);
+    const {name, stations} = req.body;
 
     if (!req.body) {
         res.status(404).send({
@@ -17,6 +15,7 @@ routerController.createRoute = async (req, res) => {
 
     const route = new Route({
         name,
+        stations, 
     });
 
     await route.save(route)
